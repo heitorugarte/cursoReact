@@ -1,0 +1,122 @@
+header {
+    text-align: center;
+    border: 5px solid;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 10px 10px 10px gray;
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(46, 59, 74, 1) 100%);
+}
+
+h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: underline;
+}
+
+h2 {
+    color: white;
+    text-decoration: underline;
+}
+
+#corpo {
+    display: grid;
+    grid-template-areas: "a1 a1 a1" "a2 a2 a2" "a3 a3 a3";
+    grid-template-columns: 1fr 4fr 1fr;
+}
+
+body {
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+#dropdownStatus {
+    height: 32px;
+}
+
+#btAdicionar {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+#btAdicionar img {
+    width: 32px;
+    height: 32px;
+}
+
+#btRemover {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+#btRemover img {
+    width: 32px;
+    height: 32px;
+}
+
+#descricaoTxt {
+    width: 90%;
+}
+
+#divRemocao {
+    display: none;
+}
+
+#divMenuEsquerda {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: black;
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(69, 120, 180, 1) 100%);
+    grid-area: a1;
+    border: 3px solid;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px 5px #000000;
+}
+
+#divMenuDireita {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    grid-area: a3;
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(69, 120, 180, 1) 100%);
+    border: 3px solid;
+    margin-top: 15px;
+    border-radius: 5px;
+    box-shadow: -5px 5px 15px 5px #000000;
+}
+
+#divTabela {
+    grid-area: a2;
+    margin-top: 15px;
+    width: 100%;
+}
+
+#tabela {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 100%;
+    box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.85);
+}
+
+#tabela th {
+    border: 2px solid;
+}
+
+#tabela td {
+    border: 1px solid;
+}
+
+@media(min-width: 1024px) {
+    #corpo {
+        display: grid;
+        grid-template-areas: "a1 a2 a3";
+        grid-template-columns: 1fr 4f 1f;
+    }
+    #divMenuEsquerda {
+        text-align: center;
+        margin-right: 15px;
+    }
+    #divMenuDireita {
+        text-align: center;
+        margin-left: 15px;
+    }
+}
