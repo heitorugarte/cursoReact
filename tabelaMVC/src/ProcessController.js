@@ -7,9 +7,9 @@ class ProcessController {
     criarTarefa = (descricao, status) => {
         if (!this.stringVazia(descricao)) {
             let tarefa = new Tarefa(descricao, status);
-            viewController.adicionarTarefa(tarefa);
+            view.adicionarTarefa(tarefa);
         } else {
-            viewController.mostrarAlerta("Descricao da tarefa inválida.");
+            view.mostrarAlerta("Descricao da tarefa inválida.");
         }
     }
 
@@ -20,16 +20,17 @@ class ProcessController {
     }
 
     limparDropdown = () => {
-        let quantidade = viewController.getQuantidadeOpcoesDropdown();
+        let quantidade = view.getQuantidadeOpcoesDropdown();
         for (let index = 0; index < quantidade; index++) {
-            viewController.removerOpcaoDropdown(index);
+            view.removerOpcaoDropdown(index);
         }
     }
 
     popularDropdown = () => {
-        let quantidade = viewController.getQuantidadeElementosTbody();
+        processController.limparDropdown();
+        let quantidade = view.getQuantidadeElementosTbody();
         for (let index = 0; index < quantidade; index++) {
-            viewController.adicionarOpcaoDropdown(index);
+            view.adicionarOpcaoDropdown(index);
         }
     }
 }

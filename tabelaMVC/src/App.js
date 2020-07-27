@@ -1,2 +1,2 @@
-var viewController = new ViewController();
+var view = new View();
 var processController = new ProcessController();

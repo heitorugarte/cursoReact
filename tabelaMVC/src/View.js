@@ -1,4 +1,4 @@
-class ViewController {
+class View {
     constructor() {
         this.tabela = document.getElementById("tabela");
         this.tBody = tabela.getElementsByTagName("tbody")[0];
@@ -67,7 +67,6 @@ class ViewController {
 
     toggleDivRemocao = () => {
         if ((this.divRemocao.style.display != "inline") && (this.tBody.getElementsByTagName('tr').length > 0)) {
-            processController.limparDropdown();
             this.divRemocao.style.display = "inline";
             this.divInserir.style.display = "none";
         } else {
