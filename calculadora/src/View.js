@@ -3,24 +3,33 @@ class View {
         this.display = document.getElementById("display");
         this.botoesNumero = document.getElementsByClassName("btNumero");
         this.botoesOperador = document.getElementsByClassName("btOperador");
+        this.adicionarListeners();
     }
 
     adicionarListeners = () => {
-        this.botoesNumero.forEach((element) =>
-            element.addEventListener('click', (e) => this.listenerBotaoNumero(element)), this);
-        this.botoesOperador.forEach((element) =>
-            element.addEventListener('click', (e) => this.listenerBotaoOperador(element)), this);
+        for (let index = 0; index < this.botoesNumero.length; index++) {
+            const botaoNumero = this.botoesNumero[index];
+            botaoNumero.addEventListener('click', (e) => this.listenerBotaoNumero(botaoNumero));
+        }
+        for (let index = 0; index < this.botoesOperador.length; index++) {
+            const botaoOperador = this.botoesOperador[index];
+            botaoOperador.addEventListener('click', (e) => this.listenerBotaoOperador(botaoOperador));
+        }
     }
 
     listenerBotaoNumero = (element) => {
-        switch (element.innerHTML) {
-
-        }
+        controller.apertouNumero(element.innerHTML);
     }
 
     listenerBotaoOperador = (element) => {
-        switch (element.innerHTML) {
+        controller.apertouOperador(element.innerHTML);
+    }
 
-        }
+    appendDisplay = (texto) => {
+        this.display.value += texto;
+    }
+
+    setDisplay = (texto) => {
+        this.display.value = texto;
     }
 }
