@@ -10,10 +10,10 @@ class ProcessController {
      * 
      * @summary - Inicializa variáveis que serão utilizadas no decorrer do documento.
      * 
-     * @var {int} idTarefas - Utilizada para controlar o ID único de cada tarefa adicionada.
+     * @var {array} listaTarefas - Lista de tarefas atualmente alocadas (apresentadas na tabela)
      */
     constructor() {
-        this.idTarefas = 1;
+        this.listaTarefas = [];
     }
 
     /**
@@ -26,13 +26,13 @@ class ProcessController {
      * que seja incluso na tabela.
      * Caso a descrição seja inválida, um alerta é exibido na tela informando do problema.
      * 
-     * @param {string} descricao
-     * @param {string} status
+     * @param {string} descricao - descricao da tarefa
+     * @param {string} status - status da tarefa
      */
     criarTarefa = (descricao, status) => {
         if (!this.stringVazia(descricao)) {
             let tarefa = new Tarefa(descricao, status);
-            view.adicionarTarefa(tarefa);
+            tarefa.id = dataBase.persistirTarefa(tarefa);
         } else {
             view.mostrarAlerta("Descricao da tarefa inválida.");
         }
@@ -44,7 +44,7 @@ class ProcessController {
      * @summary - Checa se a string informada por parâmetro é uma string válida,
      * ou seja, se possui ao menos um caracter.
      * 
-     * @param {string} string
+     * @param {string} string - string a ser validada
      * 
      * @returns {boolean}
      */
@@ -75,9 +75,47 @@ class ProcessController {
      */
     popularDropdown = () => {
         processController.limparDropdown();
-        let quantidade = view.getQuantidadeElementosTbody();
+        let quantidade = this.listaTarefas.length;
         for (let index = 0; index < quantidade; index++) {
-            view.adicionarOpcaoDropdown(index);
+            view.adicionarOpcaoDropdown(this.listaTarefas[index]);
         }
+    }
+
+    /**
+     * notifyAbertura
+     * 
+     * @summary - Ao finalizar a inicialização do banco, chama-se o metodo getTodosObjetos() para atualizar
+     * a tabela de tarefas.
+     */
+    notifyAbertura = () => {
+        dataBase.getTodosObjetos();
+    }
+
+    /**
+     * setTodosObjetos
+     * 
+     * @summary - Setter do atributo listaTarefas com as entradas mais recentes no banco de dados.
+     * Chamado pela classe DataBase no método getTodosObjetos() após concluir a requisição
+     * dos dados no banco.
+     * 
+     * @param {string} - lista de objetos atualmente armazenados no banco.
+     */
+    setTodosObjetos = (listaTarefasBanco) => {
+        this.listaTarefas = [];
+        listaTarefasBanco.forEach((obj) => {
+            this.listaTarefas.push(obj)
+        })
+        view.refreshTabela(this.listaTarefas);
+    }
+
+    /**
+     * deleteTarefa
+     * 
+     * @summary - Método para deletar uma entrada no banco de dados.
+     * 
+     * @param {int} - ID do objeto à ser deletado no banco.
+     */
+    deleteTarefa = (key) => {
+        dataBase.deletarObjeto(key);
     }
 }

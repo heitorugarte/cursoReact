@@ -5,7 +5,7 @@
  */
 class Tarefa {
     constructor(descricao, status) {
-        this.id = processController.idTarefas++;
+        this.id;
         this.descricao = descricao;
         this.status = status;
     }
