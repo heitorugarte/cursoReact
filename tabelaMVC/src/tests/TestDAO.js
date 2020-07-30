@@ -1,0 +1,9 @@
+class TestDAO {
+    constructor() {
+
+    }
+
+    testIniciarDb = () => {
+
+    }
+}
