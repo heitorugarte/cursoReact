@@ -1,5 +1,4 @@
 let db;
-
 /**
  * @class - DataBase
  * 
@@ -22,21 +21,23 @@ class DataBase {
      * @summary - Inicializa o banco de dados ao carregar a página principal.
      * Ao finalizar a inicialização, notifica o processController para que atualize
      * a tabela de tarefas.
+     * 
+     * @returns {void}
      */
     iniciarDb = () => {
         let request = window.indexedDB.open('tarefas', 1);
 
-        request.onerror = function() {
+        request.onerror = function () {
             console.log("Erro na abertura do banco de dados.");
         };
 
-        request.onsuccess = function() {
+        request.onsuccess = function () {
             console.log("Banco de dados aberto com sucesso.");
             db = request.result;
             processController.notifyAbertura();
         };
 
-        request.onupgradeneeded = function(e) {
+        request.onupgradeneeded = function (e) {
             let db = e.target.result;
 
             let objectStore = db.createObjectStore('tarefas', { autoIncrement: true });
@@ -60,6 +61,7 @@ class DataBase {
      * de tarefas com a(s) nova(s) entrada(s).
      * 
      * @param {Tarefa} tarefa - objeto à ser persistido no banco.
+     * @returns {void}
      */
     persistirTarefa = (tarefa) => {
         let novaEntrada = { descricao: tarefa.descricao, status: tarefa.status }
@@ -68,19 +70,19 @@ class DataBase {
 
         let objectStore = transacao.objectStore('tarefas');
 
-        objectStore.add(novaEntrada).onsuccess = function(persistencia) {
+        objectStore.add(novaEntrada).onsuccess = function (persistencia) {
             tarefa.id = persistencia.target.result;
             novaEntrada = { id: tarefa.id, descricao: tarefa.descricao, status: tarefa.status }
-            objectStore.put(novaEntrada, tarefa.id).onsuccess = function() {
+            objectStore.put(novaEntrada, tarefa.id).onsuccess = function () {
                 dataBase.getTodosObjetos();
             }
         }
 
-        transacao.oncomplete = function() {
+        transacao.oncomplete = function () {
             console.log("Transação concluída.");
         }
 
-        transacao.onerror = function() {
+        transacao.onerror = function () {
             console.log("Transação deu erro.");
         }
     }
@@ -90,11 +92,13 @@ class DataBase {
      * 
      * @summary - Consulta todos os objetos Tarefa armazenados no banco de dados e retorna em uma lista
      * para o processController atualizar os dados em exposição na tabela.
+     * 
+     * @returns {void}
      */
     getTodosObjetos = () => {
         let transacao = db.transaction('tarefas', 'readonly')
         let objectStore = transacao.objectStore('tarefas')
-        objectStore.getAll().onsuccess = function(consulta) {
+        objectStore.getAll().onsuccess = function (consulta) {
             processController.setTodosObjetos(consulta.target.result)
         }
     }
@@ -107,11 +111,13 @@ class DataBase {
      * com os dados atualizados.
      * 
      * @param {int} key - ID do objeto a ser deletado do banco.
+     * 
+     * @returns {void}
      */
     deletarObjeto = (key) => {
         let transacao = db.transaction(['tarefas'], 'readwrite')
         let objectStore = transacao.objectStore('tarefas')
-        objectStore.delete(parseInt(key)).onsuccess = function() {
+        objectStore.delete(parseInt(key)).onsuccess = function () {
             console.log("Entrada deletada com sucesso.");
             dataBase.getTodosObjetos();
         }

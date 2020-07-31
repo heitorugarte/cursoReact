@@ -11,6 +11,8 @@ class ProcessController {
      * @summary - Inicializa variáveis que serão utilizadas no decorrer do documento.
      * 
      * @var {array} listaTarefas - Lista de tarefas atualmente alocadas (apresentadas na tabela)
+     * 
+     * @returns {void}
      */
     constructor() {
         this.listaTarefas = [];
@@ -28,6 +30,8 @@ class ProcessController {
      * 
      * @param {string} descricao - descricao da tarefa
      * @param {string} status - status da tarefa
+     * 
+     * @returns {void}
      */
     criarTarefa = (descricao, status) => {
         if (!this.stringVazia(descricao)) {
@@ -58,6 +62,8 @@ class ProcessController {
      * LimparDropdown
      * 
      * @summary - Limpa as opções presentes no dropdown de indices de linhas removiveis da tabela.
+     * 
+     * @returns {void}
      */
     limparDropdown = () => {
         let quantidade = view.getQuantidadeOpcoesDropdown();
@@ -72,6 +78,8 @@ class ProcessController {
      * @summary - Popula o dropdown de indices de linha removives da tabela com base
      * na quantidade de linhas presentes no Tbody informadas pela classe View atraves do metodo
      * view.GetQuantidadeElementosTbody()
+     * 
+     * @returns {void}
      */
     popularDropdown = () => {
         processController.limparDropdown();
@@ -86,6 +94,8 @@ class ProcessController {
      * 
      * @summary - Ao finalizar a inicialização do banco, chama-se o metodo getTodosObjetos() para atualizar
      * a tabela de tarefas.
+     * 
+     * @returns {void}
      */
     notifyAbertura = () => {
         dataBase.getTodosObjetos();
@@ -99,6 +109,8 @@ class ProcessController {
      * dos dados no banco.
      * 
      * @param {string} - lista de objetos atualmente armazenados no banco.
+     * 
+     * @returns {void}
      */
     setTodosObjetos = (listaTarefasBanco) => {
         this.listaTarefas = [];
@@ -114,6 +126,8 @@ class ProcessController {
      * @summary - Método para deletar uma entrada no banco de dados.
      * 
      * @param {int} - ID do objeto à ser deletado no banco.
+     * 
+     * @returns {void}
      */
     deleteTarefa = (key) => {
         dataBase.deletarObjeto(key);

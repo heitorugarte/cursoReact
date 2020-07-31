@@ -8,3 +8,4 @@
 var view = new View();
 var processController = new ProcessController();
 var dataBase = new DataBase();
+var testDao = new TestDAO();
