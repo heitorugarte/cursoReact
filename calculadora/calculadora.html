@@ -1,56 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+	<head>
+			<title>Calculadora</title>
+			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width", initial-scale=1">
+			<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+		<h1>CALCULADORINHA</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles.css">
-    <title>Calculadora</title>
-</head>
+		<div class="divCalculadora">
+			<input id="campoDeTexto" type="text" placeholder="Informe a expressão" readonly />
+			<br>
+			<div class = "divBotoes">
+				<button class="tecla" id="bt7">7</button>
+				<button class="tecla" id="bt8">8</button>
+				<button class="tecla" id="bt9">9</button>
+				<button class="tecla" id="bt4">4</button>
+				<button class="tecla" id="bt5">5</button>
+				<button class="tecla" id="bt6">6</button>
+				<button class="tecla" id="bt1">1</button>
+				<button class="tecla" id="bt2">2</button>
+				<button class="tecla" id="bt3">3</button>
+				<button class="tecla" id="bt0">0</button>
+				<button class="tecla" id="bt+">+</button>
+				<button class="tecla" id="bt-">-</button>
+				<button class="tecla" id="btMult">*</button>
+				<button class="tecla" id="btDiv">/</button>
+				<div style="clear:both;"></div>
+			</div>
+			<div class="botoesMaiores">
+				<button class="teclasMaiores" id="clear">CLEAR</button>
+				<button class="teclasMaiores" id="resultado">RESULTADO</button>
+			</div>
+		</div>
 
-<body>
-    <header>
-        <h1>Calculadora Desenrolada</h1>
-    </header>
-    <div id="divCorpo">
-        <div id="divCalculadora">
-            <div id="divDisplay">
-                <input id="display" type="text">
-            </div>
-            <div id="divBotoes">
-                <div id="divBotoesSuperior">
-                    <button class="btCalculadora btNumero">7</button>
-                    <button class="btCalculadora btNumero">8</button>
-                    <button class="btCalculadora btNumero">9</button>
-                </div>
-                <div id="divBotoesCentro">
-                    <button class="btCalculadora btNumero">4</button>
-                    <button class="btCalculadora btNumero">5</button>
-                    <button class="btCalculadora btNumero">6</button>
-                </div>
-                <div id="divBotoesInferior">
-                    <button class="btCalculadora btNumero">1</button>
-                    <button class="btCalculadora btNumero">2</button>
-                    <button class="btCalculadora btNumero">3</button>
-                </div>
-                <div id="divBotaoZero">
-                    <button class="btCalculadora btNumero" id="btZero">0</button>
-                </div>
-            </div>
-            <div id="divOperadores">
-                <button class="btCalculadora btOperador" id="btSoma">+</button>
-                <button class="btCalculadora btOperador" id="btSubtracao">-</button>
-                <button class="btCalculadora btOperador" id="btDivisao">/</button>
-                <button class="btCalculadora btOperador" id="btMultiplica">*</button>
-                <button class="btCalculadora btOperador" id="btResultado">=</button>
-            </div>
-        </div>
-    </div>
-</body>
-<script src="src/View.js"></script>
-<script src="src/Controller.js"></script>
-<script src="src/testes/Test.js"></script>
-<script src="src/app.js"></script>
+		<script type="text/javascript">
+			campoDeTexto = document.getElementById("campoDeTexto");
+			document.getElementById("bt0").onclick = () => campoDeTexto.value += 0;
+			document.getElementById("bt1").onclick = () => campoDeTexto.value += 1;
+			document.getElementById("bt2").onclick = () => campoDeTexto.value += 2;
+			document.getElementById("bt3").onclick = () => campoDeTexto.value += 3;
+			document.getElementById("bt4").onclick = () => campoDeTexto.value += 4;
+			document.getElementById("bt5").onclick = () => campoDeTexto.value += 5;
+			document.getElementById("bt6").onclick = () => campoDeTexto.value += 6;
+			document.getElementById("bt7").onclick = () => campoDeTexto.value += 7;
+			document.getElementById("bt8").onclick = () => campoDeTexto.value += 8;
+			document.getElementById("bt9").onclick = () => campoDeTexto.value += 9;
+			document.getElementById("bt+").onclick = () => campoDeTexto.value += "+";
+			document.getElementById("bt-").onclick = () => campoDeTexto.value += "-";
+			document.getElementById("btMult").onclick = () => campoDeTexto.value += "*";
+			document.getElementById("btDiv").onclick = () => campoDeTexto.value += "/";
 
+			document.getElementById("clear").onclick = () => campoDeTexto.value = "";
+			document.getElementById("resultado").onclick = function() {
+				expressao = campoDeTexto.value;
+				resultado = eval(expressao);
+				campoDeTexto.value = resultado;
+			}
+
+		</script>
+	</body>
 </html>
