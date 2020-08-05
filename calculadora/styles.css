@@ -1,50 +1,88 @@
-h1{
-	text-decoration: underline;
+header {
+    text-align: center;
 }
 
-body{
-	text-align: center;
+body {
+    background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
+    height: 1000px;
 }
 
-.divCalculadora{
-	background: gray;
-	border: 2px solid black;
-	width: 175px;
-	height: 450px;
-	margin: auto;
+#divCorpo {
+    height: 100%;
 }
 
-.divBotoes{
-	width:172px;
-	height: 250px;
-	margin-left: 2px;
+.btCalculadora {
+    width: 50px;
+    height: 65px;
+    font-size: 2rem;
+    margin: 2px;
+    border-radius: 5px;
 }
 
-.tecla{
-	width: 50px;
-	height: 50px;
-	align-content: center;
-	border: 1px solid black;
+#divCorpo {
+    display: flex;
+    justify-content: center;
 }
 
-.botoesMaiores{
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
+#divCalculadora {
+    display: grid;
+    grid-template-areas: "a0 a1" "a0 a2" "a0 a2";
+    grid-template-rows: 65px 220px 65px;
+    grid-template-columns: 50px 220px;
 }
 
-.teclasMaiores{
-	width: 165px;
-	height: 50px;
-	margin: 10px;
+#display {
+    height: 100%;
+    border: 1px solid;
+    padding: 0px;
+    margin: 0px;
+    box-shadow: 5px 5px 15px black;
+    font-size: 1rem;
 }
 
-#campoDeTexto{
-	margin-left: 2px;
-	margin-bottom: 5px;
-	margin-top: 2px;
-	width: 150px;
-	height: 20px;
-	border: 2px solid black;
+#divOperadores {
+    grid-area: a0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#divDisplay {
+    grid-area: a1;
+    height: 38px;
+    margin: auto;
+}
+
+#divBotoes {
+    grid-area: a2;
+    display: grid;
+    margin: auto;
+    grid-template-areas: "btSup" "btCentro" "btInf" "btZero";
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+#divBotoesSuperior {
+    grid-area: btSup;
+    margin: auto;
+}
+
+#divBotoesCentro {
+    grid-area: btCentro;
+    margin: auto;
+}
+
+#divBotoesInferior {
+    grid-area: btInf;
+    margin: auto;
+}
+
+#divBotaoZero {
+    grid-area: btZero;
+    width: 100%;
+    margin: auto;
+}
+
+#btZero {
+    margin: auto;
+    width: 100%;
 }

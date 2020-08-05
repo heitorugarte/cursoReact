@@ -1,0 +1,341 @@
+header {
+    background: rgb(0, 175, 125);
+    display: flex;
+    justify-content: center;
+}
+
+#cabecalho {
+    background: rgb(0, 175, 125);
+    height: 64px;
+    width: 70%;
+    display: flex;
+    border-bottom: 1px solid ghostwhite;
+}
+
+#divLogoEcred {
+    height: auto;
+    border-left: 0.5px solid ghostwhite;
+}
+
+#logoEcred {
+    height: 32px;
+    margin: 10px;
+}
+
+#menuSuperior {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.menuItem {
+    color: white;
+    padding: 5px;
+    font-family: Roboto, sans-serif;
+}
+
+#menuCanto {
+    border-left: 1px solid ghostwhite;
+    margin: 10px;
+    display: flex;
+}
+
+#btEntrar {
+    color: green;
+    border: 0px;
+    background-color: white;
+    width: 70px;
+    height: 30px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#paginaSuperior {
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(0,175,125,1) 0%, rgba(0,175,76,1) 100%);
+    height: 450px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#corpoPaginaSuperior {
+    width: 65%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#painelEsquerda {
+    width: 60%;
+}
+
+#textoInicial {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    height: 150px;
+    margin-right: 200px;
+}
+
+h1 {
+    color: white;
+    font-size: 2rem;
+    flex-wrap: nowrap;
+    margin: 0px;
+    font-family: Roboto, sans-serif;
+}
+
+h2 {
+    color: white;
+    font-size: large;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    font-family: Roboto, sans-serif;
+}
+
+#painelSimule {
+    width: 304px;
+    height: 116px;
+    background: white;
+    border-radius: 6px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#btSimuleGratis {
+    background: #ba2f7d;
+    width: 208px;
+    height: 48px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    margin: 15px;
+    font-weight: bold;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#imgUmProduto {
+    width: 189px;
+    height: 35px;
+}
+
+#imgSuperior {
+    width: auto;
+    height: auto;
+}
+
+#divImgSuperior {
+    width: 55%;
+    margin: 0;
+}
+
+#segundaSessao {
+    height: 400px;
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+}
+
+h3 {
+    color: rgba(0, 0, 0, 0.66);
+    font-size: 2.4rem;
+    font-family: Roboto, sans-serif;
+}
+
+h4 {
+    font-family: Roboto, sans-serif;
+}
+
+p {
+    font-family: Roboto, sans-serif;
+}
+
+#corpoSegundaSessao {
+    margin-top: 10px;
+    width: 65%;
+}
+
+#divVantagens {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#terceiraSessao{
+    background: #d8d8d8;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 180px;
+}
+
+#corpoTerceiraSessao{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.numeros{
+    background: white;
+    margin: 20px;
+    width: 302px;
+    height: 90px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+h5{
+    color: #00af7d;
+    font-family: Roboto, sans-serif;
+    font-size: 2rem;
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.textoNumeros{
+    margin-top: 10px;
+    color: rgba(0,0,0,0.44);
+    font-family: Roboto, sans-serif;
+}
+
+#quartaSessao{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url("imagens/eCred-celularSozinho.png");
+    background-size: 25%;
+    background-repeat: no-repeat;
+    background-position-x: 820px;
+    background-position-y: 120px;
+}
+
+#corpoQuartaSessao{
+    display: grid;
+    margin-top: 80px;
+}
+
+.divPasso{
+    width: 480px;
+    height: 130px;
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 10px gray;
+    border-radius: 2px;
+    background-color: white;
+}
+
+.contentPasso{
+    width: 390px;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    text-align: left;
+    align-items: center;
+    border-bottom: 1.5px solid rgb(0, 175, 125);
+}
+
+.divPasso h3{
+    font-size: 2rem;
+    margin-left: 10px;
+}
+
+.divPasso h5{
+    font-size: 3rem;
+}
+
+#botaoSimule{
+    margin-top: 120px;
+}
+
+#quintaSessao{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#corpoQuintaSessao{
+    width: 65%;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+}
+
+#imagensQuintaSessao{
+    display: flex;
+    flex-direction: column;
+}
+
+#emprestimoImg{
+    width: 390px;
+    height: 308px;
+}
+
+#cartaoImg{
+    width: 390px;
+    height: 308px;
+}
+
+.textoQuintaSessao{
+    margin: 40px;
+    width: 393px;
+}
+
+.textoQuintaSessao h5{
+    font-size: 1.5rem;
+}
+
+.textoQuintaSessao a{
+    text-decoration: none;
+    color: #ba2f7d;
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+}
+
+.textoQuintaSessao p{
+    font-family: Roboto, sans-serif;
+        color: rgba(0,0,0,0.66);
+}
+
+#containerImagens{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+#imagensCredito{
+    display: grid;
+    width: 1065px;
+    grid-template-areas: "c1 c2 c3 c4 c5";
+    grid-template-columns: auto;
+    /* display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left; */
+}
+
+.imgCredito{
+    width: 128px;
+    height: 56px;
+    margin: 40px;
+}

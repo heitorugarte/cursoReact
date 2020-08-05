@@ -1,0 +1,9 @@
+{
+    "name": "Tarefas PWA",
+    "short_name": "Tarefas",
+    "lang": "en-US",
+    "start_url": "/tabela.html",
+    "display": "standalone",
+    "background_color": "white",
+    "theme_color": "white"
+}
