@@ -15,6 +15,9 @@ class View {
    * adiciona listeners nos botões.
    */
   constructor() {
+    this.usOption = document.getElementById('us')
+    this.brOption = document.getElementById('br')
+    this.btnPesquisa = document.getElementById('btnPesquisa')
     this.telaNoticiasDestaque = document.getElementById("telaNoticiasDestaque");
     this.telaNoticias = this.telaNoticiasDestaque;
     this.telaNoticiasSalvas = document.getElementById("telaNoticiasSalvas");
@@ -31,6 +34,7 @@ class View {
     this.btNoticiasEmDestaque.addEventListener("click", () => {
       this.mostrarNoticiasDestaque();
     });
+    this.trocarParametrosdaURL()
   }
 
   /**
@@ -48,6 +52,17 @@ class View {
       const noticiaObj = listaNoticias[index];
       this.appendNoticia(this.noticiaToHtmlCard(noticiaObj));
     }
+  }
+
+  trocarParametrosdaURL() {
+    this.usOption.addEventListener("click", () => {
+      controller.enviarParametroPais("us")
+    });
+    this.brOption.addEventListener("click", () => {
+      /*this.pesquisa = document.getElementById('pesquisa').value
+      if (this.pesquisa == "") return alert("O formulário não pode ser nulo!")*/
+      controller.enviarParametroPais("br")
+    });
   }
 
   /**

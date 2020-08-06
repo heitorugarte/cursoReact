@@ -5,11 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="white" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="manifest" href="/manifest.json" />
     <title>Portal Notícias</title>
   </head>
 
   <body>
+    <nav class="navbar navbar-light bg-light">
+      <ul class="navbar-nav">
+        <li>
+          <a class="navbar-brand" id="us" href="">US</a>
+        </li>
+        <li>
+          <a class="navbar-brand" id="br" href="">BR</a>
+        </li>
+      </ul>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" id="pesquisa" placeholder="Tipo de Matéria" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" id="btnPesquisa" type="button">Search</button>
+      </form>
+    </nav>
     <div id="container">
       <div id="cabecalho">
         <h1>Notícias BizuMaximus</h1>

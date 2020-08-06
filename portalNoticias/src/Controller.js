@@ -18,6 +18,10 @@ class Controller {
     this.listaNoticias = [];
   }
 
+  enviarParametroPais(valor){
+    dao.pais = valor
+  }
+
   /**
    * Método para receber lista de notícias
    *

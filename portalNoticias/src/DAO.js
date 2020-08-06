@@ -21,9 +21,9 @@ class Dao {
    * as notícias em destaque mais recentes para que sejam exibidas.
    */
   constructor() {
-    this.baseUrl = "http://newsapi.org/v2";
-    this.apiKey = "f9cf82cb0f564cafa2d4871eb1e65723";
-    window.addEventListener("load", this.iniciarAplicacao);
+    this.pais
+    this.initPesquisa(this.pais)
+    this.iniciarAplicacao()
   }
 
   /**
@@ -65,8 +65,16 @@ class Dao {
 
       console.log("Setup do Banco de Dados concluído.");
     };
-    this.buscarNoticiasPais("br");
   };
+
+  initPesquisa(value) {
+    if(value == undefined) {
+      value = "br"
+      this.buscarNoticiasPais(value);
+    } else {
+      this.buscarNoticiasPais(value);
+    }
+  }
 
   /**
    * Método para persistir notícia no indexedDB
@@ -159,26 +167,28 @@ class Dao {
    * @param {string} country
    */
   buscarNoticiasPais(country) {
-    let urlRequisicao =
-      this.baseUrl +
-      "/top-headlines?country=" +
-      country +
-      "&apiKey=" +
-      this.apiKey;
+    let baseUrl = "http://newsapi.org/v2";
+    let apiKey = "f9cf82cb0f564cafa2d4871eb1e65723"
+    let query
+    let urlRequisicao = baseUrl + "/top-headlines?country=" + country + "&apiKey=" + apiKey;
     let myHeaders = new Headers().append("Content-type", "application/json");
     const myInit = {
       method: "GET",
       headers: myHeaders
     };
-    fetch(urlRequisicao, myInit)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(json) {
-        controller.receberListaNoticias(json);
-      })
-      .catch(function(e) {
-        alert("Não foi possível conectar ao servidor");
-      });
+    this.fazerFetch(urlRequisicao, myInit)
+  }
+
+  fazerFetch(url, init){
+    fetch(url, init)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      controller.receberListaNoticias(json);
+    })
+    .catch(function(e) {
+      alert("Não foi possível conectar ao servidor");
+    });
   }
 }
