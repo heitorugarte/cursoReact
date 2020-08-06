@@ -1,4 +1,16 @@
+/**
+ * @class View
+ *
+ * @summary Classe View que é responsavel exclusivamente por manipulações no DOM
+ *
+ */
 class View {
+  /**
+   * @constructor
+   *
+   * @summary Construtor da classe View; Busca todos os elementos no DOM que precisarão ser manipulados e
+   * adiciona listeners nos botões.
+   */
   constructor() {
     this.telaNoticiasDestaque = document.getElementById("telaNoticiasDestaque");
     this.telaNoticias = this.telaNoticiasDestaque;
@@ -18,6 +30,15 @@ class View {
     });
   }
 
+  /**
+   * Método para exibir na tela a lista de notícias
+   *
+   * @summary Este método recebe por parâmetro uma lista de objetos do tipo Notícia
+   * e, antes de fazer o append desta noticia no documento, a mesma é transformada em um objeto HTML
+   * em forma de um card através do método noticiaToHtmlCard.
+   *
+   * @param {array} listaNoticias
+   */
   exibirNoticias(listaNoticias) {
     let card;
     for (let index = 0; index < listaNoticias.length; index++) {
@@ -26,6 +47,15 @@ class View {
     }
   }
 
+  /**
+   * Método para transformar um objeto Notícia em um card HTML
+   *
+   * @summary Este método recebe um objeto Notícia por parâmetro e transforma-o
+   * em um objeto HTML semelhante à um card para que seja inserido no DOM
+   * e seja visualizado na tela.
+   *
+   * @param {Noticia} noticia
+   */
   noticiaToHtmlCard(noticia) {
     noticia = Object.assign(new Noticia(), noticia);
     if (noticia.content) {
@@ -96,14 +126,25 @@ class View {
     }
   }
 
+  /**
+   * Método para inserir um elemento HTML (card de notícia) no DOM.
+   *
+   * @summary Este método recebe por parâmetro uma notícia que foi convertida para um
+   * objeto HTML semelhante à um card e é inserido no DOM para visualização.
+   *
+   * @param {HTMLElement} card
+   */
   appendNoticia(card) {
     if (card) this.telaNoticias.appendChild(card);
   }
 
-  appendNoticiaSalva(card) {
-    if (card) this.telaNoticiasSalvas.appendChild(card);
-  }
-
+  /**
+   * Método para alternar o display das divs para exibir as noticias salvas
+   *
+   * @summary Este método altera o display das divs para que a div de notícias salvas seja
+   * exibida e a div de notícias em destaque fique escondida. Também, ao mostrar a tela de notícias salvas,
+   * esta é primeiramente limpa para que seja repopulada com as notícias salvas no banco.
+   */
   mostrarNoticiasSalvas() {
     this.limparTelaNoticiasSalvas();
     this.telaNoticiasDestaque.style.display = "none";
@@ -113,10 +154,22 @@ class View {
     this.telaNoticias = this.telaNoticiasSalvas;
   }
 
+  /**
+   * Método para limpar visualização de notícias salvas
+   *
+   * @summary Este método exclui todo o HTML contido dentro da div de notícias salvas a fim de
+   * limpar o display para receber as notícias salvas mais recentes.
+   */
   limparTelaNoticiasSalvas() {
     this.telaNoticiasSalvas.innerHTML = "";
   }
 
+  /**
+   * Método para alternar o display das divs para exibir as notícias destaque
+   *
+   * @summary Este método altera o display das divs para que a div de notícias salvas fique escondida e
+   * a div de notícias destaque seja exibida. Esta é a visualização padrão do portal.
+   */
   mostrarNoticiasDestaque() {
     this.telaNoticiasDestaque.style.display = "flex";
     this.telaNoticiasSalvas.style.display = "none";

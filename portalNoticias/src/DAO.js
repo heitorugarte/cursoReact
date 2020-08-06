@@ -1,12 +1,34 @@
+//Variável para armazenar a instancia do indexedDB.
 let db;
 
+/**
+ * @class Dao
+ *
+ * @summary Classe responsável por fazer as requisições para a API newsapi e também
+ * armazenar e consultar os dados presentes no indexedDB.
+ */
 class Dao {
+  /**
+   * @constructor
+   *
+   * @summary Construtor da classe DAO; Seta a URL base da newsapi para fazer requisições,
+   * a key para acesso à API e adiciona um listener para o evento 'load' da janela, onde
+   * o banco de dados será iniciado e ao final da execução uma requisição é feita para consultar
+   * as notícias em destaque mais recentes para que sejam exibidas.
+   */
   constructor() {
     this.baseUrl = "http://newsapi.org/v2";
     this.apiKey = "f9cf82cb0f564cafa2d4871eb1e65723";
     window.addEventListener("load", this.iniciarAplicacao);
   }
 
+  /**
+   * Método para inicalizar a aplicação e seus recursos
+   *
+   * @summary Este método abre o indexedDB para que sejam feitas persistências e consultas e
+   * ao fim de sua execução é feita uma chamada à newsapi para consultar as notícias em destaque do momento
+   * à fim de exibi-las assim que o site é carregado.
+   */
   iniciarAplicacao = () => {
     let request = window.indexedDB.open("noticias", 1);
 
@@ -42,6 +64,13 @@ class Dao {
     this.buscarNoticiasPais("br");
   };
 
+  /**
+   * Método para persistir notícia no indexedDB
+   *
+   * @summary Este método recebe um objeto Noticia por parâmetro e insere-o no indexedDB.
+   *
+   * @param {Noticia} noticia
+   */
   salvarNoticia(noticia) {
     let novaEntrada = this.criarEntrada(noticia);
     let transacao = db.transaction(["noticias"], "readwrite");
@@ -55,6 +84,15 @@ class Dao {
     };
   }
 
+  /**
+   * Este método cria um objeto 'genérico' para entrada no banco.
+   *
+   * @summary Este método recebe um objeto Noticia por parametro e o transforma
+   * em um objeto genérico com as chaves e valores de um objeto Noticia a fim de
+   * inseri-lo no indexedDB.
+   *
+   * @param {Noticia} noticia
+   */
   criarEntrada(noticia) {
     let novaEntrada = {
       source: {
@@ -74,6 +112,14 @@ class Dao {
     return novaEntrada;
   }
 
+  /**
+   * Método para excluir noticia do indexedDB.
+   *
+   * @summary Este método recebe um objeto Noticia por parametro e o exclui do indexedDB.
+   * Após isto, refaz a lista de noticias salvas para atualizar a view.
+   *
+   * @param {Noticia} noticia
+   */
   excluirNoticia(noticia) {
     let transacao = db.transaction(["noticias"], "readwrite");
     let objectStore = transacao.objectStore("noticias");
@@ -83,6 +129,13 @@ class Dao {
     };
   }
 
+  /**
+   * Método para consultar as noticias salvas no indexedDB.
+   *
+   * @summary Este método consulta o indexedDB e passa para o controller a lista de todos os objetos Noticia
+   * salvos.
+   *
+   */
   getNoticiasSalvas() {
     let transacao = db.transaction(["noticias"], "readonly");
     let objectStore = transacao.objectStore("noticias");
@@ -91,6 +144,16 @@ class Dao {
     };
   }
 
+  /**
+   * Método para fazer requisição na newsAPI e pegar notícias destaque por país.
+   *
+   * @summary Este método faz uma requisição para a newsAPI utilizando os atributos
+   * urlBase e apiKey para consultar as notícias em destaque no país informado por parametro.
+   * Após a consulta, a lista de notícias retornada pela API é informada para o controller através
+   * do método receberListaNoticias.
+   *
+   * @param {string} country
+   */
   buscarNoticiasPais(country) {
     let urlRequisicao =
       this.baseUrl +
@@ -111,7 +174,7 @@ class Dao {
         controller.receberListaNoticias(json);
       })
       .catch(function(e) {
-        console.log(e);
+        alert("Não foi possível conectar ao servidor");
       });
   }
 }
