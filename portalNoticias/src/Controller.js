@@ -19,7 +19,7 @@ class Controller {
   }
 
   enviarParametroPais(valor){
-    dao.pais = valor
+    dao.initPesquisa(valor)
   }
 
   /**

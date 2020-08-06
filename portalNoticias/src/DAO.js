@@ -21,8 +21,6 @@ class Dao {
    * as notícias em destaque mais recentes para que sejam exibidas.
    */
   constructor() {
-    this.pais
-    this.initPesquisa(this.pais)
     this.iniciarAplicacao()
   }
 
