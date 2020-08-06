@@ -2,6 +2,10 @@
  * @class Noticia
  *
  * @summary Classe modelo para o objeto Notícia contendo todas as propriedades necessárias.
+ *
+ * @since 1.0.0
+ * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
+ *
  */
 
 class Noticia {

@@ -3,6 +3,9 @@
  *
  * @summary Classe View que é responsavel exclusivamente por manipulações no DOM
  *
+ * @since 1.0.0
+ * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
+ * 
  */
 class View {
   /**

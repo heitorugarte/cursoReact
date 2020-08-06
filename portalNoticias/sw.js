@@ -2,6 +2,10 @@
  * @class sw
  *
  * @summary Classe referente ao serviceWorker utilizado pela aplicação.
+ *
+ * @since 1.0.0
+ * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
+ *
  */
 var cacheName = "noticias-pwa";
 var filesToCache = [

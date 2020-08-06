@@ -2,6 +2,10 @@
  * @class Controller
  *
  * @summary Classe para manipular os dados da aplicação
+ *
+ * @since 1.0.0
+ * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
+ *
  */
 class Controller {
   /**

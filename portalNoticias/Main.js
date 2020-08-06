@@ -5,6 +5,10 @@
  * e adiciona o listener no evento 'onload' para que o serviceWorker seja registrado.
  * Cria as variaveis controller, dao e view de acesso global para que sejam acessadas
  * entre todos os scripts da aplicação.
+ *
+ * @since 1.0.0
+ * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
+ *
  */
 
 var controller, dao, view;

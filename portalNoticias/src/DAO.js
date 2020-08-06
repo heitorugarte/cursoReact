@@ -6,6 +6,10 @@ let db;
  *
  * @summary Classe responsável por fazer as requisições para a API newsapi e também
  * armazenar e consultar os dados presentes no indexedDB.
+ *
+ * @since 1.0.0
+ * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
+ *
  */
 class Dao {
   /**
