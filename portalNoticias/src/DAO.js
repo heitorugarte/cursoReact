@@ -63,16 +63,9 @@ class Dao {
 
       console.log("Setup do Banco de Dados concluído.");
     };
+    var api = new Api()
+    api.buscarNoticiasPais("br")
   };
-
-  initPesquisa(value) {
-    if(value == undefined) {
-      value = "br"
-      this.buscarNoticiasPais(value);
-    } else {
-      this.buscarNoticiasPais(value);
-    }
-  }
 
   /**
    * Método para persistir notícia no indexedDB
@@ -152,41 +145,5 @@ class Dao {
     objectStore.getAll().onsuccess = function(consulta) {
       controller.mostrarNoticiasSalvas(consulta.target.result);
     };
-  }
-
-  /**
-   * Método para fazer requisição na newsAPI e pegar notícias destaque por país.
-   *
-   * @summary Este método faz uma requisição para a newsAPI utilizando os atributos
-   * urlBase e apiKey para consultar as notícias em destaque no país informado por parametro.
-   * Após a consulta, a lista de notícias retornada pela API é informada para o controller através
-   * do método receberListaNoticias.
-   *
-   * @param {string} country
-   */
-  buscarNoticiasPais(country) {
-    let baseUrl = "http://newsapi.org/v2";
-    let apiKey = "f9cf82cb0f564cafa2d4871eb1e65723"
-    let query
-    let urlRequisicao = baseUrl + "/top-headlines?country=" + country + "&apiKey=" + apiKey;
-    let myHeaders = new Headers().append("Content-type", "application/json");
-    const myInit = {
-      method: "GET",
-      headers: myHeaders
-    };
-    this.fazerFetch(urlRequisicao, myInit)
-  }
-
-  fazerFetch(url, init){
-    fetch(url, init)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(json) {
-      controller.receberListaNoticias(json);
-    })
-    .catch(function(e) {
-      alert("Não foi possível conectar ao servidor");
-    });
   }
 }

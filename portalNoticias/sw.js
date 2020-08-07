@@ -15,6 +15,7 @@ var filesToCache = [
   "/Main.js",
   "/src/Controller.js",
   "/src/DAO.js",
+  "/src/Api.js",
   "/src/Noticia.js",
   "/src/View.js"
 ];

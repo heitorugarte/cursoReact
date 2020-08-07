@@ -12,17 +12,11 @@
 
   <body>
     <nav class="navbar navbar-light bg-light">
-      <ul class="navbar-nav">
-        <li>
-          <a class="navbar-brand" id="us" href="">US</a>
-        </li>
-        <li>
-          <a class="navbar-brand" id="br" href="">BR</a>
-        </li>
-      </ul>
       <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" id="pesquisa" placeholder="Tipo de Matéria" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" id="btnPesquisa" type="button">Search</button>
+        <button class="btn btn-outline-info btn-sm mr-sm-2" type="button" id="us" href="#">US</button>
+        <button class="btn btn-outline-info btn-sm mr-sm-2" type="button" id="br" href="#">BR</button>
+        <input class="form-control form-control-sm mr-sm-2" type="search" type="button" id="pesquisa" placeholder="Tipo de Matéria" aria-label="Search">
+        <button class="btn btn-outline-success btn-sm" id="btnPesquisa" type="button">Search</button>
       </form>
     </nav>
     <div id="container">
@@ -41,8 +35,9 @@
       <div id="telaNoticiasDestaque"></div>
       <div id="telaNoticiasSalvas"></div>
     </div>
-    <script src="src/Controller.js"></script>
+    <script src="src/Api.js"></script>
     <script src="src/Dao.js"></script>
+    <script src="src/Controller.js"></script>
     <script src="src/View.js"></script>
     <script src="src/Noticia.js"></script>
     <script src="Main.js"></script>
