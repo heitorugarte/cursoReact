@@ -15,6 +15,23 @@ class View {
    * adiciona listeners nos botões.
    */
   constructor() {
+    this.usOption = document.getElementById('us')
+    this.usOption.addEventListener("click", () => {
+      controller.enviarParametroPais('us')
+    });
+    this.brOption = document.getElementById('br')
+    this.brOption.addEventListener("click", () => {
+      controller.enviarParametroPais("br")
+    });
+    this.btnPesquisa = document.getElementById('btnPesquisa')
+    this.btnPesquisa.addEventListener("click", () => {
+      this.pesquisa = document.getElementById('pesquisa').value
+      if (this.pesquisa == "") return alert("O formulário não pode ser nulo!")
+      controller.enviarParametroPesquisa("query,"+this.pesquisa);
+    });
+    
+
+    this.btnPesquisa = document.getElementById('btnPesquisa')
     this.telaNoticiasDestaque = document.getElementById("telaNoticiasDestaque");
     this.telaNoticias = this.telaNoticiasDestaque;
     this.telaNoticiasSalvas = document.getElementById("telaNoticiasSalvas");
@@ -165,6 +182,16 @@ class View {
    */
   limparTelaNoticiasSalvas() {
     this.telaNoticiasSalvas.innerHTML = "";
+  }
+
+  /**
+   * Método para limpar visualização de notícias
+   *
+   * @summary Este método exclui todo o HTML contido dentro da div de notícias a fim de
+   * limpar o display para receber as notícias mais recentes.
+   */
+  limparTelaNoticias() {
+    this.telaNoticiasDestaque.innerHTML = "";
   }
 
   /**

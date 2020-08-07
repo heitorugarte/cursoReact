@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="white" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="manifest" href="/manifest.json" />
     <title>Portal Notícias</title>
   </head>
 
   <body>
+    <nav class="navbar navbar-light bg-light">
+      <form class="form-inline">
+        <button class="btn btn-outline-info btn-sm mr-sm-2" type="button" id="us" href="#">US</button>
+        <button class="btn btn-outline-info btn-sm mr-sm-2" type="button" id="br" href="#">BR</button>
+        <input class="form-control form-control-sm mr-sm-2" type="search" type="button" id="pesquisa" placeholder="Tipo de Matéria" aria-label="Search">
+        <button class="btn btn-outline-success btn-sm" id="btnPesquisa" type="button">Search</button>
+      </form>
+    </nav>
     <div id="container">
       <div id="cabecalho">
         <h1>Notícias BizuMaximus</h1>
@@ -26,8 +35,9 @@
       <div id="telaNoticiasDestaque"></div>
       <div id="telaNoticiasSalvas"></div>
     </div>
-    <script src="src/Controller.js"></script>
+    <script src="src/Api.js"></script>
     <script src="src/Dao.js"></script>
+    <script src="src/Controller.js"></script>
     <script src="src/View.js"></script>
     <script src="src/Noticia.js"></script>
     <script src="Main.js"></script>

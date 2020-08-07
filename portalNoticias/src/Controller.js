@@ -19,6 +19,26 @@ class Controller {
   }
 
   /**
+   * @summary Método recebe uma string de país e envia para a classe Api para renderizar
+   * uma nova pesquisa.
+   * 
+   * @param {String} valor 
+   */
+  enviarParametroPais(valor){
+    new Api(valor);
+  }
+
+  /**
+   * @summary Método recebe uma string de palavra chave e envia para a classe Api para renderizar
+   * uma nova pesquisa.
+   * 
+   * @param {String} valor 
+   */
+  enviarParametroPesquisa(valor) {
+    new Api(valor)
+  }
+
+  /**
    * Método para receber lista de notícias
    *
    * @summary Método que recebe por parâmetro uma lista
@@ -29,10 +49,12 @@ class Controller {
    * @param {array} objetoLista
    */
   receberListaNoticias(objetoLista) {
+    this.listaNoticias = []
     for (let index = 0; index < objetoLista.articles.length; index++) {
       const element = objetoLista.articles[index];
       this.listaNoticias.push(Object.assign(new Noticia(), element));
     }
+    view.limparTelaNoticias()
     view.exibirNoticias(this.listaNoticias);
   }
 
