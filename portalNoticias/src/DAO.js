@@ -1,6 +1,7 @@
+import { Api } from "./Api.js";
+
 //Variável para armazenar a instancia do indexedDB.
 let db;
-
 /**
  * @class Dao
  *
@@ -11,7 +12,7 @@ let db;
  * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
  *
  */
-class Dao {
+export class Dao {
   /**
    * @constructor
    *
@@ -21,7 +22,7 @@ class Dao {
    * as notícias em destaque mais recentes para que sejam exibidas.
    */
   constructor() {
-    this.iniciarAplicacao()
+    this.iniciarAplicacao();
   }
 
   /**
@@ -63,8 +64,8 @@ class Dao {
 
       console.log("Setup do Banco de Dados concluído.");
     };
-    var api = new Api()
-    api.buscarNoticiasPais("br")
+    var api = new Api();
+    api.buscarNoticiasPais("br");
   };
 
   /**

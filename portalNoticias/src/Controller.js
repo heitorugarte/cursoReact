@@ -1,3 +1,5 @@
+import { Api } from "./Api.js";
+
 /**
  * @class Controller
  *
@@ -7,7 +9,7 @@
  * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
  *
  */
-class Controller {
+export class Controller {
   /**
    * @constructor
    *
@@ -21,21 +23,21 @@ class Controller {
   /**
    * @summary Método recebe uma string de país e envia para a classe Api para renderizar
    * uma nova pesquisa.
-   * 
-   * @param {String} valor 
+   *
+   * @param {String} valor
    */
-  enviarParametroPais(valor){
+  enviarParametroPais(valor) {
     new Api(valor);
   }
 
   /**
    * @summary Método recebe uma string de palavra chave e envia para a classe Api para renderizar
    * uma nova pesquisa.
-   * 
-   * @param {String} valor 
+   *
+   * @param {String} valor
    */
   enviarParametroPesquisa(valor) {
-    new Api(valor)
+    new Api(valor);
   }
 
   /**
@@ -49,12 +51,12 @@ class Controller {
    * @param {array} objetoLista
    */
   receberListaNoticias(objetoLista) {
-    this.listaNoticias = []
+    this.listaNoticias = [];
     for (let index = 0; index < objetoLista.articles.length; index++) {
       const element = objetoLista.articles[index];
       this.listaNoticias.push(Object.assign(new Noticia(), element));
     }
-    view.limparTelaNoticias()
+    view.limparTelaNoticias();
     view.exibirNoticias(this.listaNoticias);
   }
 

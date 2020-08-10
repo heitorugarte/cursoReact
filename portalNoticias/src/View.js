@@ -1,3 +1,5 @@
+import { Controller } from "./Controller.js";
+
 /**
  * @class View
  *
@@ -5,9 +7,9 @@
  *
  * @since 1.0.0
  * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
- * 
+ *
  */
-class View {
+export class View extends React.Component {
   /**
    * @constructor
    *
@@ -15,23 +17,23 @@ class View {
    * adiciona listeners nos botões.
    */
   constructor() {
-    this.usOption = document.getElementById('us')
+    super();
+    this.usOption = document.getElementById("us");
     this.usOption.addEventListener("click", () => {
-      controller.enviarParametroPais('us')
+      controller.enviarParametroPais("us");
     });
-    this.brOption = document.getElementById('br')
+    this.brOption = document.getElementById("br");
     this.brOption.addEventListener("click", () => {
-      controller.enviarParametroPais("br")
+      controller.enviarParametroPais("br");
     });
-    this.btnPesquisa = document.getElementById('btnPesquisa')
+    this.btnPesquisa = document.getElementById("btnPesquisa");
     this.btnPesquisa.addEventListener("click", () => {
-      this.pesquisa = document.getElementById('pesquisa').value
-      if (this.pesquisa == "") return alert("O formulário não pode ser nulo!")
-      controller.enviarParametroPesquisa("query,"+this.pesquisa);
+      this.pesquisa = document.getElementById("pesquisa").value;
+      if (this.pesquisa == "") return alert("O formulário não pode ser nulo!");
+      controller.enviarParametroPesquisa("query," + this.pesquisa);
     });
-    
 
-    this.btnPesquisa = document.getElementById('btnPesquisa')
+    this.btnPesquisa = document.getElementById("btnPesquisa");
     this.telaNoticiasDestaque = document.getElementById("telaNoticiasDestaque");
     this.telaNoticias = this.telaNoticiasDestaque;
     this.telaNoticiasSalvas = document.getElementById("telaNoticiasSalvas");
@@ -61,10 +63,18 @@ class View {
    */
   exibirNoticias(listaNoticias) {
     let card;
+    let noticiasDom = [];
     for (let index = 0; index < listaNoticias.length; index++) {
       const noticiaObj = listaNoticias[index];
-      this.appendNoticia(this.noticiaToHtmlCard(noticiaObj));
+      noticiasDom.push(
+        React.createElement(
+          ViewCard,
+          { key: Math.random().toString(), noticia: noticiaObj },
+          null
+        )
+      );
     }
+    ReactDOM.render(noticiasDom, this.telaNoticiasDestaque);
   }
 
   /**
@@ -206,5 +216,85 @@ class View {
     this.divBtNoticiasDestaque.style.display = "none";
     this.divBtNoticiasSalvas.style.display = "block";
     this.telaNoticias = this.telaNoticiasDestaque;
+  }
+}
+
+export class ViewCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.noticia = props.noticia;
+  }
+
+  render() {
+    const manchete = React.createElement(
+      "div",
+      { className: "cardManchete" },
+      React.createElement("a", { href: this.noticia.url }, this.noticia.title)
+    );
+
+    const conteudo = React.createElement(
+      "div",
+      { className: "cardConteudo" },
+      React.createElement("p", null, this.noticia.content)
+    );
+
+    const imagem = React.createElement(
+      "div",
+      { className: "cardImagem" },
+      React.createElement("img", {
+        id: "imgComponent",
+        src: this.noticia.urlToImage
+      })
+    );
+
+    var cardSalvar, cardExcluir;
+
+    if (!this.noticia.salvo) {
+      cardSalvar = React.createElement(
+        "div",
+        { className: "cardSalvar" },
+        React.createElement(
+          "button",
+          { className: "btSalvar", onClick: this.noticia.clickBtSalvar },
+          "Salvar"
+        )
+      );
+    } else {
+      cardExcluir = React.createElement(
+        "div",
+        {
+          className: "cardExcluir"
+        },
+        React.createElement(
+          "button",
+          {
+            className: "btExcluir",
+            onClick: this.noticia.clickBtExcluir
+          },
+          "Excluir"
+        )
+      );
+    }
+
+    let dataPartes = this.noticia.publishedAt.split("-");
+    let ano, mes, dia;
+    ano = dataPartes[0];
+    mes = dataPartes[1];
+    dia = dataPartes[2].split("T")[0];
+    let dataFormatada = dia + "/" + mes + "/" + ano;
+
+    const data = React.createElement(
+      "div",
+      { className: "cardData" },
+      "Autor: " + this.noticia.source.name + " -- Data: " + dataFormatada
+    );
+
+    return React.createElement("div", { className: "card" }, [
+      manchete,
+      conteudo,
+      imagem,
+      cardSalvar ? cardSalvar : cardExcluir,
+      data
+    ]);
   }
 }
