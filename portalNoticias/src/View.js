@@ -228,19 +228,19 @@ export class ViewCard extends React.Component {
   render() {
     const manchete = React.createElement(
       "div",
-      { className: "cardManchete" },
+      { key: Math.random().toString(), className: "cardManchete" },
       React.createElement("a", { href: this.noticia.url }, this.noticia.title)
     );
 
     const conteudo = React.createElement(
       "div",
-      { className: "cardConteudo" },
+      { key: Math.random().toString(), className: "cardConteudo" },
       React.createElement("p", null, this.noticia.content)
     );
 
     const imagem = React.createElement(
       "div",
-      { className: "cardImagem" },
+      { key: Math.random().toString(), className: "cardImagem" },
       React.createElement("img", {
         id: "imgComponent",
         src: this.noticia.urlToImage
@@ -252,7 +252,7 @@ export class ViewCard extends React.Component {
     if (!this.noticia.salvo) {
       cardSalvar = React.createElement(
         "div",
-        { className: "cardSalvar" },
+        { key: Math.random().toString(), className: "cardSalvar" },
         React.createElement(
           "button",
           { className: "btSalvar", onClick: this.noticia.clickBtSalvar },
@@ -263,11 +263,13 @@ export class ViewCard extends React.Component {
       cardExcluir = React.createElement(
         "div",
         {
+          key: Math.random().toString(),
           className: "cardExcluir"
         },
         React.createElement(
           "button",
           {
+            key: Math.random().toString(),
             className: "btExcluir",
             onClick: this.noticia.clickBtExcluir
           },
@@ -289,12 +291,10 @@ export class ViewCard extends React.Component {
       "Autor: " + this.noticia.source.name + " -- Data: " + dataFormatada
     );
 
-    return React.createElement("div", { className: "card" }, [
-      manchete,
-      conteudo,
-      imagem,
-      cardSalvar ? cardSalvar : cardExcluir,
-      data
-    ]);
+    return React.createElement(
+      "div",
+      { key: Math.random().toString(), className: "card" },
+      [manchete, conteudo, imagem, cardSalvar ? cardSalvar : cardExcluir, data]
+    );
   }
 }

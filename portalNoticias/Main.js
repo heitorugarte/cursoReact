@@ -1,3 +1,7 @@
+import { View } from "./src/View.js";
+import { Controller } from "./src/Controller.js";
+import { Dao } from "./src/DAO.js";
+
 /**
  * @class Main
  *
@@ -11,10 +15,9 @@
  *
  */
 
-var controller, dao, view;
-view = new View();
-controller = new Controller();
-dao = new Dao();
+window.view = new View();
+window.controller = new Controller();
+window.dao = new Dao();
 
 window.onload = () => {
   "use strict";
