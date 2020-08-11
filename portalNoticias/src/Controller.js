@@ -69,6 +69,16 @@ export class Controller {
     dao.getNoticiasSalvas();
   }
 
+  excluirNoticia(noticia) {
+    noticia.salvo = false;
+    dao.excluirNoticia(noticia);
+  }
+
+  salvarNoticia(noticia) {
+    noticia.salvo = true;
+    dao.salvarNoticia(noticia);
+  }
+
   /**
    * Método para exibir a lista de notícias salvas
    *

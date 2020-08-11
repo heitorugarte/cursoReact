@@ -18,6 +18,7 @@ export class View extends React.Component {
    */
   constructor() {
     super();
+    this.noticiasDom = [];
     this.usOption = document.getElementById("us");
     this.usOption.addEventListener("click", () => {
       controller.enviarParametroPais("us");
@@ -63,10 +64,10 @@ export class View extends React.Component {
    */
   exibirNoticias(listaNoticias) {
     let card;
-    let noticiasDom = [];
+    this.noticiasDom = [];
     for (let index = 0; index < listaNoticias.length; index++) {
       const noticiaObj = listaNoticias[index];
-      noticiasDom.push(
+      this.noticiasDom.push(
         React.createElement(
           ViewCard,
           { key: Math.random().toString(), noticia: noticiaObj },
@@ -74,7 +75,7 @@ export class View extends React.Component {
         )
       );
     }
-    ReactDOM.render(noticiasDom, this.telaNoticiasDestaque);
+    ReactDOM.render(this.noticiasDom, this.telaNoticias);
   }
 
   /**
@@ -176,7 +177,6 @@ export class View extends React.Component {
    * esta é primeiramente limpa para que seja repopulada com as notícias salvas no banco.
    */
   mostrarNoticiasSalvas() {
-    this.limparTelaNoticiasSalvas();
     this.telaNoticiasDestaque.style.display = "none";
     this.telaNoticiasSalvas.style.display = "flex";
     this.divBtNoticiasDestaque.style.display = "block";
@@ -191,7 +191,7 @@ export class View extends React.Component {
    * limpar o display para receber as notícias salvas mais recentes.
    */
   limparTelaNoticiasSalvas() {
-    this.telaNoticiasSalvas.innerHTML = "";
+    ReactDOM.render(this.noticiasDom, this.telaNoticiasSalvas);
   }
 
   /**
@@ -201,7 +201,7 @@ export class View extends React.Component {
    * limpar o display para receber as notícias mais recentes.
    */
   limparTelaNoticias() {
-    this.telaNoticiasDestaque.innerHTML = "";
+    ReactDOM.render(this.noticiasDom, this.telaNoticiasDestaque);
   }
 
   /**
@@ -255,7 +255,10 @@ export class ViewCard extends React.Component {
         { key: Math.random().toString(), className: "cardSalvar" },
         React.createElement(
           "button",
-          { className: "btSalvar", onClick: this.noticia.clickBtSalvar },
+          {
+            className: "btSalvar",
+            onClick: () => controller.salvarNoticia(this.noticia)
+          },
           "Salvar"
         )
       );
@@ -271,7 +274,7 @@ export class ViewCard extends React.Component {
           {
             key: Math.random().toString(),
             className: "btExcluir",
-            onClick: this.noticia.clickBtExcluir
+            onClick: () => controller.excluirNoticia(this.noticia)
           },
           "Excluir"
         )
@@ -287,7 +290,7 @@ export class ViewCard extends React.Component {
 
     const data = React.createElement(
       "div",
-      { className: "cardData" },
+      { key: Math.random().toString(), className: "cardData" },
       "Autor: " + this.noticia.source.name + " -- Data: " + dataFormatada
     );
 

@@ -28,27 +28,6 @@ class Noticia {
     this.salvo;
     this.id;
   }
-
-  /**
-   * Método chamado ao clicar no botão de salvar notícia.
-   *
-   * @summary Este método é atribuído como um callback no listener de clique do botão de salvar.
-   * Ao ser chamado, requisitará que a classe DAO salve a notícia em questão no indexedDB.
-   */
-  clickBtSalvar() {
-    this.salvo = true;
-    dao.salvarNoticia(this);
-  }
-
-  /**
-   * Método chamado ao clicar no botão de excluir notícia.
-   *
-   * @summary Este método é atribuído como um callback no listener de clique do botão de salvar.
-   * Ao ser chamado, requisitará que a classe DAO exclua a notícia em questão no indexedDB.
-   */
-  clickBtExcluir() {
-    dao.excluirNoticia(this);
-  }
 }
 
 /**
