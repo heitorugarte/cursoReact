@@ -90,7 +90,6 @@ export default class Tabela extends React.Component {
                   <button
                     id="btOk"
                     onClick={() => {
-                      /*
                       let indiceEscolhido = document.getElementById(
                         "indiceRemover"
                       ).value;
@@ -101,27 +100,11 @@ export default class Tabela extends React.Component {
                           this.setState({
                             listaTarefas: this.tarefasController.listaTarefas
                           });
-                          console.log(this.state.listaTarefas);
                         });
                       document.getElementById("divInserir").style.display =
                         "block";
                       document.getElementById("divRemocao").style.display =
                         "none";
-                        */
-                      let indiceEscolhido = document.getElementById(
-                        "indiceRemover"
-                      ).value;
-                      let novasTarefas = this.tarefasController.listaTarefas.map(
-                        (valor, index) => {
-                          if (valor.id != indiceEscolhido) {
-                            return valor;
-                          }
-                        }
-                      );
-                      console.log(novasTarefas);
-                      this.setState({
-                        listaTarefas: novasTarefas
-                      });
                     }}
                   >
                     OK
@@ -137,17 +120,11 @@ export default class Tabela extends React.Component {
 }
 
 export class Tcorpo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { listaTarefas: props.listaTarefas };
-  }
-
   render() {
-    console.log(this.listaTarefas);
     return (
       <tbody>
-        {this.state.listaTarefas ? (
-          this.state.listaTarefas.map((tarefa, index) => {
+        {this.props.listaTarefas ? (
+          this.props.listaTarefas.map((tarefa, index) => {
             return (
               <Tr
                 key={tarefa.id}
@@ -166,11 +143,6 @@ export class Tcorpo extends React.Component {
 }
 
 export class Tr extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
-  }
-
   render() {
     return (
       <tr>
