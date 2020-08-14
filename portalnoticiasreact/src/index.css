@@ -1,0 +1,155 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+#container {
+  display: grid;
+  height: 100%;
+  grid-template-areas: "a1 a1" "a3 a3" "a2 a2";
+  grid-template-rows: 1fr auto auto;
+  grid-template-columns: 5fr 1fr;
+}
+
+body {
+  height: 100%;
+  background-image: linear-gradient(
+    112.1deg,
+    rgba(32, 38, 57, 1) 11.4%,
+    rgba(63, 76, 119, 1) 70.2%
+  );
+}
+
+#cabecalho {
+  grid-area: a1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+}
+
+#cabecalho h1 {
+  font-family: fantasy;
+  color: whitesmoke;
+  text-shadow: 5px 5px 5px black;
+}
+
+#cabecalho h2 {
+  color: beige;
+  text-shadow: 2px 2px 2px black;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+#telaNoticiasDestaque {
+  grid-area: a2;
+  box-shadow: 5px 5px 5px black;
+  background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+  margin: 5px;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+#menu {
+  grid-area: a3;
+  box-shadow: 5px 5px 5px black;
+  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  margin-bottom: 15px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border: 2px solid black;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+  display: grid;
+  grid-template-areas: "img img" "manchete manchete" "conteudo conteudo" "salvarExcluir salvarExcluir" "autor autor";
+  background-color: white;
+  box-shadow: 3px 4px 4px black;
+  width: 400px;
+  height: 450px;
+  text-overflow: ellipsis;
+  margin: 5px;
+  border: 1px solid;
+}
+
+.cardManchete {
+  display: block;
+  grid-area: manchete;
+}
+
+.cardManchete a {
+  margin-bottom: 2px;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.cardConteudo {
+  grid-area: conteudo;
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardImagem {
+  grid-area: img;
+  height: 170px;
+  width: 400px;
+}
+
+.cardData {
+  grid-area: autor;
+  font-weight: bold;
+}
+
+.cardSalvar {
+  grid-area: salvarExcluir;
+}
+
+.btSalvar {
+  font-size: 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: orange;
+}
+
+.cardExcluir {
+  grid-area: salvarExcluir;
+}
+
+.btExcluir {
+  font-size: 1.5rem;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: red;
+}
+
+#divBtNoticiasDestaques {
+  display: none;
+}
+
+#divBtNoticiasSalvas {
+  display: block;
+}
+
+#imgComponent {
+  width: 400px;
+  height: 170px;
+}
