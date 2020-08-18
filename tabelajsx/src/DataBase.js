@@ -7,10 +7,9 @@ export default class DataBase {
   /**
    * @constructor
    */
-  constructor(tarefasController) {
+  constructor() {
     window.onload = this.iniciarDb;
     this.dbInicializado = false;
-    this.tarefasController = tarefasController;
   }
 
   iniciarDb = () => {
@@ -33,7 +32,7 @@ export default class DataBase {
       });
 
       objectStore.createIndex("descricao", "descricao", { unique: false });
-      objectStore.createIndex("status", "status", { unique: false });
+      objectStore.createIndex("situacao", "situacao", { unique: false });
 
       console.log("Setup do Banco de Dados concluído.");
     };
@@ -74,7 +73,7 @@ export default class DataBase {
         });
 
         objectStore.createIndex("descricao", "descricao", { unique: false });
-        objectStore.createIndex("status", "status", { unique: false });
+        objectStore.createIndex("situacao", "situacao", { unique: false });
 
         console.log("Setup do Banco de Dados concluído.");
       };
@@ -107,7 +106,7 @@ export default class DataBase {
         let db = request.result;
         let novaEntrada = {
           descricao: tarefa.descricao,
-          status: tarefa.status
+          situacao: tarefa.situacao
         };
 
         let transacao = db.transaction(["tarefas"], "readwrite");
@@ -116,7 +115,9 @@ export default class DataBase {
 
         objectStore.add(novaEntrada).onsuccess = function(persistencia) {
           tarefa.id = persistencia.target.result;
-          result(tarefa);
+          objectStore.getAll().onsuccess = function(consulta) {
+            result(consulta.target.result);
+          };
         };
 
         transacao.oncomplete = function() {
@@ -137,7 +138,7 @@ export default class DataBase {
         });
 
         objectStore.createIndex("descricao", "descricao", { unique: false });
-        objectStore.createIndex("status", "status", { unique: false });
+        objectStore.createIndex("situacao", "situacao", { unique: false });
 
         console.log("Setup do Banco de Dados concluído.");
       };
@@ -170,6 +171,43 @@ export default class DataBase {
         let objectStore = transacao.objectStore("tarefas");
         objectStore.delete(parseInt(key)).onsuccess = function() {
           console.log("Entrada deletada com sucesso.");
+          objectStore.getAll().onsuccess = function(consulta) {
+            result(consulta.target.result);
+          };
+        };
+      };
+
+      request.onupgradeneeded = function(e) {
+        let db = e.target.result;
+
+        let objectStore = db.createObjectStore("tarefas", {
+          keyPath: "id",
+          autoIncrement: true
+        });
+
+        objectStore.createIndex("descricao", "descricao", { unique: false });
+        objectStore.createIndex("status", "status", { unique: false });
+
+        console.log("Setup do Banco de Dados concluído.");
+      };
+    });
+  };
+
+  deletarTodos = () => {
+    return new Promise(result => {
+      let request = window.indexedDB.open("tarefas", 1);
+
+      request.onerror = function() {
+        console.log("Erro na abertura do banco de dados.");
+      };
+
+      request.onsuccess = function() {
+        console.log("Banco de dados aberto com sucesso.");
+        let db = request.result;
+        let transacao = db.transaction(["tarefas"], "readwrite");
+        let objectStore = transacao.objectStore("tarefas");
+        objectStore.clear().onsuccess = function() {
+          console.log("Banco apagado com sucesso.");
           objectStore.getAll().onsuccess = function(consulta) {
             result(consulta.target.result);
           };

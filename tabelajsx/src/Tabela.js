@@ -1,15 +1,72 @@
-import React from "react";
+import React, { Component } from "react";
 import Tarefa from "../src/Tarefa.js";
+import { connect } from "react-redux";
+import DataBase from "./DataBase.js";
 
-export default class Tabela extends React.Component {
+class Tabela extends Component {
   constructor(props) {
     super(props);
-    this.tarefasController = props.tarefasController;
-    this.state = { listaTarefas: props.listaTarefas };
+    this.dataBase = new DataBase();
+  }
+
+  async componentDidMount() {
+    await this.dataBase.getListaTarefas().then(listaTarefas => {
+      this.createDispatch(listaTarefas);
+    });
+  }
+
+  async addTarefa(descricao, situacao) {
+    let tarefa = new Tarefa(descricao, situacao);
+    await this.dataBase.persistirTarefa(tarefa).then(listaTarefas => {
+      this.createDispatch(listaTarefas);
+    });
+  }
+
+  async removeTarefa(id) {
+    await this.dataBase.deletarObjeto(id).then(listaTarefas => {
+      this.createDispatch(listaTarefas);
+      document.getElementById("divInserir").style.display = "block";
+      document.getElementById("divRemocao").style.display = "none";
+    });
+  }
+
+  createDispatch(listaTarefas) {
+    this.props.dispatch({
+      type: "tarefa/updateLista",
+      lista: listaTarefas
+    });
+  }
+
+  mostrarPainelRemocao() {
+    document.getElementById("divInserir").style.display = "none";
+    document.getElementById("divRemocao").style.display = "block";
+    let dropdownIndices = document.getElementById("indiceRemover");
+    dropdownIndices.innerHTML = "";
+    for (let index = 0; index < this.props.listaTarefas.length; index++) {
+      const tarefa = this.props.listaTarefas[index];
+      let option = document.createElement("option");
+      option.innerHTML = tarefa.id;
+      option.value = tarefa.id;
+      dropdownIndices.appendChild(option);
+    }
+  }
+
+  mostrarPainelAdicionar() {
+    document.getElementById("divInserir").style.display = "block";
+    document.getElementById("divRemocao").style.display = "none";
+  }
+
+  async apagarTudo() {
+    await this.dataBase.deletarTodos().then(listaTarefas => {
+      this.props.dispatch({
+        type: "tarefa/updateLista",
+        lista: listaTarefas
+      });
+    });
+    this.mostrarPainelAdicionar();
   }
 
   render() {
-    console.log("chamou render");
     return (
       <div id="divTabela">
         <table id="tabela">
@@ -20,7 +77,7 @@ export default class Tabela extends React.Component {
               <th>Situação</th>
             </tr>
           </thead>
-          <Tcorpo listaTarefas={this.state.listaTarefas} />
+          <Tcorpo listaTarefas={this.props.listaTarefas} />
           <tfoot>
             <tr>
               <td></td>
@@ -41,45 +98,18 @@ export default class Tabela extends React.Component {
                   <button
                     id="btAdicionar"
                     onClick={() => {
-                      this.tarefasController
-                        .adicionarTarefa(
-                          document.getElementById("descricaoTxt").value,
-                          document.getElementById("dropdownStatus").value
-                        )
-                        .then(() => {
-                          this.setState({
-                            listaTarefas: this.tarefasController.listaTarefas
-                          });
-                        });
+                      this.addTarefa(
+                        document.getElementById("descricaoTxt").value,
+                        document.getElementById("dropdownStatus").value
+                      );
+                      document.getElementById("descricaoTxt").value = "";
                     }}
                   >
                     Adicionar
                   </button>
                   <button
                     id="btRemover"
-                    onClick={() => {
-                      document.getElementById("divInserir").style.display =
-                        "none";
-                      document.getElementById("divRemocao").style.display =
-                        "block";
-                      let dropdownIndices = document.getElementById(
-                        "indiceRemover"
-                      );
-                      dropdownIndices.innerHTML = "";
-                      for (
-                        let index = 0;
-                        index < this.tarefasController.listaTarefas.length;
-                        index++
-                      ) {
-                        const tarefa = this.tarefasController.listaTarefas[
-                          index
-                        ];
-                        let option = document.createElement("option");
-                        option.innerHTML = tarefa.id;
-                        option.value = tarefa.id;
-                        dropdownIndices.appendChild(option);
-                      }
-                    }}
+                    onClick={() => this.mostrarPainelRemocao()}
                   >
                     Remover
                   </button>
@@ -90,24 +120,28 @@ export default class Tabela extends React.Component {
                   <button
                     id="btOk"
                     onClick={() => {
-                      let indiceEscolhido = document.getElementById(
-                        "indiceRemover"
-                      ).value;
-                      this.tarefasController
-                        .deleteTarefa(indiceEscolhido)
-                        .then(result => {
-                          this.tarefasController.listaTarefas = result;
-                          this.setState({
-                            listaTarefas: this.tarefasController.listaTarefas
-                          });
-                        });
-                      document.getElementById("divInserir").style.display =
-                        "block";
-                      document.getElementById("divRemocao").style.display =
-                        "none";
+                      let id = document.getElementById("indiceRemover").value;
+                      if (id === "") this.mostrarPainelAdicionar();
+                      else this.removeTarefa(id);
                     }}
                   >
                     OK
+                  </button>
+                  <button
+                    id="btApagarTodos"
+                    onClick={() => {
+                      this.apagarTudo();
+                    }}
+                  >
+                    Apagar Tudo
+                  </button>
+                  <button
+                    id="btCancelar"
+                    onClick={() => {
+                      this.mostrarPainelAdicionar();
+                    }}
+                  >
+                    Cancelar
                   </button>
                 </div>
               </td>
@@ -119,7 +153,16 @@ export default class Tabela extends React.Component {
   }
 }
 
-export class Tcorpo extends React.Component {
+const mapStateToProps = state => {
+  return {
+    listaTarefas: state.listaTarefas
+  };
+};
+
+export default connect(mapStateToProps)(Tabela);
+
+//-----------------------------------------------------------------------------------------------------
+class Tcorpo extends React.Component {
   render() {
     return (
       <tbody>
@@ -130,7 +173,7 @@ export class Tcorpo extends React.Component {
                 key={tarefa.id}
                 id={tarefa.id}
                 descricao={tarefa.descricao}
-                situacao={tarefa.status}
+                situacao={tarefa.situacao}
               />
             );
           })
@@ -142,7 +185,7 @@ export class Tcorpo extends React.Component {
   }
 }
 
-export class Tr extends React.Component {
+class Tr extends React.Component {
   render() {
     return (
       <tr>

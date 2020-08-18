@@ -1,16 +1,8 @@
 import React from "react";
 import Styles from "../src/css/styles.css";
 import Tabela from "./Tabela";
-import TarefasController from "./TarefasController.js";
 
 export class AppShell extends React.Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
-    this.tarefasController = props.tarefasController;
-    this.listaTarefas = props.listaTarefas;
-  }
-
   render() {
     return (
       <div id="corpo">
@@ -48,10 +40,7 @@ export class AppShell extends React.Component {
             ante, non sagittis lacus ornare tristique.
           </p>
         </div>
-        <Tabela
-          tarefasController={this.tarefasController}
-          listaTarefas={this.listaTarefas}
-        />
+        <Tabela />
       </div>
     );
   }

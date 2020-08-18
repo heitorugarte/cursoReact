@@ -4,8 +4,8 @@
  * @summary - Modelo de um objeto Tarefa
  */
 export default class Tarefa {
-  constructor(descricao, status) {
+  constructor(descricao, situacao) {
     this.descricao = descricao;
-    this.status = status;
+    this.situacao = situacao;
   }
 }
