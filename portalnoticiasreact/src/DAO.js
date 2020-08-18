@@ -10,7 +10,7 @@ let db;
  * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
  *
  */
-export class Dao {
+export default class Dao {
   /**
    * @constructor
    *
@@ -19,9 +19,7 @@ export class Dao {
    * o banco de dados será iniciado e ao final da execução uma requisição é feita para consultar
    * as notícias em destaque mais recentes para que sejam exibidas.
    */
-  constructor(controller, api) {
-    this.api = api;
-    this.controller = controller;
+  constructor() {
     this.iniciarAplicacao();
   }
 
@@ -74,6 +72,7 @@ export class Dao {
    * @param {Noticia} noticia
    */
   salvarNoticia(noticia) {
+    noticia.salvo = true;
     let funcaoEntrada = this.criarEntrada;
     let novaEntrada = funcaoEntrada(noticia);
     let transacao = db.transaction(["noticias"], "readwrite");

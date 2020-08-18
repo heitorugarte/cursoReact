@@ -1,5 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import Dao from "./DAO";
+import { connect } from "react-redux";
+import { Api } from "./Api";
 /**
  * @class View
  *
@@ -9,7 +11,7 @@ import ReactDOM from "react-dom";
  * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
  *
  */
-export class View extends React.Component {
+export default class View extends React.Component {
   /**
    * @constructor
    *
@@ -18,8 +20,9 @@ export class View extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.controller = props.controller;
-    this.state = { listaNoticias: props.listaNoticias };
+    this.dao = props.dao;
+    this.api = props.api;
+    this.listaNoticias = props.listaNoticias;
   }
 
   /**
@@ -32,13 +35,14 @@ export class View extends React.Component {
    * @param {array} listaNoticias
    */
   render() {
-    return this.state.listaNoticias ? (
-      this.state.listaNoticias.map((noticiaObj, index) => {
+    return this.props.listaNoticias ? (
+      this.props.listaNoticias.map((noticiaObj, index) => {
         return (
           <ViewCard
             key={index}
-            controller={this.controller}
             noticia={noticiaObj}
+            dao={this.dao}
+            appShell={this.props.appShell}
           />
         );
       })
@@ -59,13 +63,10 @@ export class ViewCard extends React.Component {
         <Conteudo content={this.props.noticia.content} />
         <Imagem urlToImage={this.props.noticia.urlToImage} />
         {!this.props.noticia.salvo ? (
-          <Divsalvar
-            controller={this.props.controller}
-            noticia={this.props.noticia}
-          />
+          <Divsalvar dao={this.props.dao} noticia={this.props.noticia} />
         ) : (
-          <Divexcluir
-            controller={this.props.controller}
+          <DivExcluirConnected
+            dao={this.props.dao}
             noticia={this.props.noticia}
           />
         )}
@@ -116,14 +117,13 @@ const Imagem = props => {
 };
 
 const Divsalvar = props => {
-  let controller = props.controller;
   let noticia = props.noticia;
   return (
     <div className="cardSalvar">
       <button
         className="btSalvar"
         onClick={() => {
-          controller.salvarNoticia(noticia);
+          props.dao.salvarNoticia(noticia);
         }}
       >
         Salvar
@@ -132,15 +132,19 @@ const Divsalvar = props => {
   );
 };
 
-const Divexcluir = props => {
-  let controller = props.controller;
+const DivExcluir = props => {
   let noticia = props.noticia;
   return (
     <div className="cardExcluir">
       <button
         className="btExcluir"
         onClick={() => {
-          controller.excluirNoticia(noticia);
+          props.dao.excluirNoticia(noticia).then(listaNoticiasSalvas => {
+            props.dispatch({
+              type: "noticia/updateLista",
+              lista: listaNoticiasSalvas
+            });
+          });
         }}
       >
         Excluir
@@ -158,3 +162,5 @@ const Dataautor = props => {
     </div>
   );
 };
+
+const DivExcluirConnected = connect()(DivExcluir);

@@ -8,10 +8,6 @@
  *
  */
 export class Api {
-  constructor(controller) {
-    this.controller = controller;
-  }
-
   /**
    * @summary Método recebe uma string ou será 'us' e 'br' ou será uma pesquisa, por exemplo:
    * 'query palavras' será retirado o query e a url recebera apenas 'palavras'
@@ -44,28 +40,21 @@ export class Api {
    * @param {string} country
    */
   buscarNoticiasPais(country) {
-    return new Promise(result => {
+    return new Promise(async result => {
       var url = `http://newsapi.org/v2/top-headlines?country=${country}&apiKey=f9cf82cb0f564cafa2d4871eb1e65723`;
       var req = new Request(url);
-      this.fazerFetch(req);
-      fetch(req)
-        .then(response => {
-          return response.json();
-        })
-        .then(json => {
-          result(json);
-          //this.controller.receberListaNoticias(json);
-        })
-        .catch(e => {
-          alert(e);
-        });
+      result(await this.fazerFetch(req));
     });
   }
 
   buscarNoticiasPorPalavra(palavra) {
-    var url = `http://newsapi.org/v2/everything?q=${palavra}&apiKey=f9cf82cb0f564cafa2d4871eb1e65723`;
-    var req = new Request(url);
-    this.fazerFetch(req);
+    if (palavra == "") return this.buscarNoticiasPais("br");
+    let query = palavra.trim();
+    return new Promise(async result => {
+      var url = `http://newsapi.org/v2/everything?q=${query}&apiKey=f9cf82cb0f564cafa2d4871eb1e65723`;
+      var req = new Request(url);
+      result(await this.fazerFetch(req));
+    });
   }
 
   /**
@@ -73,5 +62,18 @@ export class Api {
    *
    * @param {Request} req
    */
-  fazerFetch(req) {}
+  fazerFetch(req) {
+    return new Promise(result => {
+      fetch(req)
+        .then(response => {
+          return response.json();
+        })
+        .then(json => {
+          result(json.articles);
+        })
+        .catch(e => {
+          alert(e);
+        });
+    });
+  }
 }
