@@ -11,7 +11,7 @@ import { Api } from "./Api";
  * @author Heitor Silveira <heitorsilveirafurb@gmail.com>
  *
  */
-export default class View extends React.Component {
+class ViewDestaque extends React.Component {
   /**
    * @constructor
    *
@@ -23,6 +23,15 @@ export default class View extends React.Component {
     this.dao = props.dao;
     this.api = props.api;
     this.listaNoticias = props.listaNoticias;
+  }
+
+  componentDidMount() {
+    this.api.buscarNoticiasPais("br").then(listaNoticias => {
+      this.props.dispatch({
+        type: "noticia/updateLista",
+        lista: listaNoticias
+      });
+    });
   }
 
   /**
@@ -37,20 +46,58 @@ export default class View extends React.Component {
   render() {
     return this.props.listaNoticias ? (
       this.props.listaNoticias.map((noticiaObj, index) => {
-        return (
-          <ViewCard
-            key={index}
-            noticia={noticiaObj}
-            dao={this.dao}
-            appShell={this.props.appShell}
-          />
-        );
+        return <ViewCard key={index} noticia={noticiaObj} dao={this.dao} />;
       })
     ) : (
       <div></div>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    listaNoticias: state.listaNoticias
+  };
+};
+
+export const ViewDestaqueConnected = connect(mapStateToProps)(ViewDestaque);
+
+class ViewFavoritos extends React.Component {
+  constructor(props) {
+    super(props);
+    this.dao = props.dao;
+    this.listaNoticias = props.listaNoticias;
+  }
+
+  componentDidMount() {
+    this.dao.getNoticiasSalvas().then(listaNoticias => {
+      this.props.dispatch({
+        type: "noticia/updateLista",
+        lista: listaNoticias
+      });
+    });
+  }
+
+  /**
+   * Método para exibir na tela a lista de notícias
+   *
+   * @summary Este método recebe por parâmetro uma lista de objetos do tipo Notícia
+   * e, antes de fazer o append desta noticia no documento, a mesma é transformada em um objeto HTML
+   * em forma de um card através do método noticiaToHtmlCard.
+   *
+   * @param {array} listaNoticias
+   */
+  render() {
+    return this.props.listaNoticias ? (
+      this.props.listaNoticias.map((noticiaObj, index) => {
+        return <ViewCard key={index} noticia={noticiaObj} dao={this.dao} />;
+      })
+    ) : (
+      <div></div>
+    );
+  }
+}
+
+export const ViewFavoritosConnected = connect(mapStateToProps)(ViewFavoritos);
 
 export class ViewCard extends React.Component {
   render() {

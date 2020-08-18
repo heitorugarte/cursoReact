@@ -1,4 +1,5 @@
-import View from "./View";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { ViewDestaqueConnected, ViewFavoritosConnected } from "./View";
 import React from "react";
 import Dao from "./DAO";
 import { Api } from "./Api";
@@ -11,51 +12,28 @@ class AppShell extends React.Component {
     this.api = new Api();
   }
 
-  componentDidMount() {
-    this.buscarNoticiasDefault();
-  }
-
-  buscarNoticiasDefault() {
-    this.api.buscarNoticiasPais("br").then(listaNoticias => {
-      this.createDispatch(listaNoticias);
-    });
-  }
-
-  createDispatch(listaNoticias) {
-    this.props.dispatch({
-      type: "noticia/updateLista",
-      lista: listaNoticias
-    });
-  }
-
   render() {
     return (
       <div>
-        <Header
-          dao={this.dao}
-          api={this.api}
-          appShell={this}
-          listaNoticiasDestaque={this.props.listaNoticias}
-        />
+        <HeaderConnected dao={this.dao} api={this.api} />
         <div id="telaNoticiasDestaque">
-          <View
-            dao={this.dao}
-            api={this.api}
-            listaNoticias={this.props.listaNoticias}
-            appShell={this}
-          />
+          <Router>
+            <Switch>
+              <Route path="/favoritos">
+                <ViewFavoritosConnected dao={this.dao} />
+              </Route>
+              <Route path={["/", "/destaque"]} exact={true}>
+                <ViewDestaqueConnected dao={this.dao} api={this.api} />
+              </Route>
+            </Switch>
+          </Router>
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    listaNoticias: state.listaNoticias
-  };
-};
 
-export default connect(mapStateToProps)(AppShell);
+export default connect()(AppShell);
 
 class Header extends React.Component {
   constructor(props) {
@@ -83,7 +61,10 @@ class Header extends React.Component {
               href="#"
               onClick={() => {
                 this.props.api.buscarNoticiasPais("us").then(listaNoticias => {
-                  this.props.appShell.createDispatch(listaNoticias);
+                  this.props.dispatch({
+                    type: "noticia/updateLista",
+                    lista: listaNoticias
+                  });
                 });
               }}
             >
@@ -96,7 +77,10 @@ class Header extends React.Component {
               href="#"
               onClick={() => {
                 this.props.api.buscarNoticiasPais("br").then(listaNoticias => {
-                  this.props.appShell.createDispatch(listaNoticias);
+                  this.props.dispatch({
+                    type: "noticia/updateLista",
+                    lista: listaNoticias
+                  });
                 });
               }}
             >
@@ -120,7 +104,10 @@ class Header extends React.Component {
                     document.getElementById("pesquisa").value
                   )
                   .then(listaNoticias => {
-                    this.props.appShell.createDispatch(listaNoticias);
+                    this.props.dispatch({
+                      type: "noticia/updateLista",
+                      lista: listaNoticias
+                    });
                   });
               }}
             >
@@ -134,35 +121,28 @@ class Header extends React.Component {
             <h2>Aqui não tem só notícia: tem novas, news e niubilis.</h2>
           </div>
           <div id="menu">
-            <div id="divBtNoticiasSalvas">
-              <a
-                href="#"
-                id="btNoticiasSalvas"
-                onClick={() => {
-                  this.props.dao.getNoticiasSalvas().then(listaNoticias => {
-                    this.props.appShell.createDispatch(listaNoticias);
-                    this.mostrarBtNoticiasDestaque();
-                  });
-                }}
-              >
-                Notícias Salvas
-              </a>
-            </div>
-            <div id="divBtNoticiasDestaques">
-              <a
-                href="#"
-                id="btNoticiasDestaque"
-                onClick={() => {
-                  this.props.appShell.buscarNoticiasDefault();
-                  this.mostrarBtNoticiasSalvas();
-                }}
-              >
-                Notícias em Destaque
-              </a>
-            </div>
+            <Router>
+              <Switch>
+                <Route path="/favoritos">
+                  <div id="divBtNoticiasDestaques">
+                    <a href="/destaque" id="btNoticiasDestaque">
+                      Notícias em Destaque
+                    </a>
+                  </div>
+                </Route>
+                <Route path={["/", "/destaque"]} exact={true}>
+                  <div id="divBtNoticiasSalvas">
+                    <a href="/favoritos" id="btNoticiasSalvas">
+                      Notícias Salvas
+                    </a>
+                  </div>
+                </Route>
+              </Switch>
+            </Router>
           </div>
         </div>
       </div>
     );
   }
 }
+const HeaderConnected = connect()(Header);

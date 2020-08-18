@@ -72,16 +72,26 @@ export default class Dao {
    * @param {Noticia} noticia
    */
   salvarNoticia(noticia) {
-    noticia.salvo = true;
+    let request = window.indexedDB.open("noticias", 1);
     let funcaoEntrada = this.criarEntrada;
-    let novaEntrada = funcaoEntrada(noticia);
-    let transacao = db.transaction(["noticias"], "readwrite");
-    let objectStore = transacao.objectStore("noticias");
-    objectStore.add(novaEntrada).onsuccess = function(persistencia) {
-      noticia.id = persistencia.target.result;
-      novaEntrada = funcaoEntrada(noticia);
-      objectStore.put(novaEntrada, noticia.id).onsuccess = function() {
-        console.log("Sucesso!");
+
+    request.onerror = function() {
+      console.log("Erro na abertura do banco de dados.");
+    };
+
+    request.onsuccess = function() {
+      console.log("Banco de dados aberto com sucesso.");
+      db = request.result;
+      noticia.salvo = true;
+      let novaEntrada = funcaoEntrada(noticia);
+      let transacao = db.transaction(["noticias"], "readwrite");
+      let objectStore = transacao.objectStore("noticias");
+      objectStore.add(novaEntrada).onsuccess = function(persistencia) {
+        noticia.id = persistencia.target.result;
+        novaEntrada = funcaoEntrada(noticia);
+        objectStore.put(novaEntrada, noticia.id).onsuccess = function() {
+          console.log("Sucesso!");
+        };
       };
     };
   }
@@ -143,10 +153,20 @@ export default class Dao {
    */
   getNoticiasSalvas() {
     return new Promise(resolve => {
-      let transacao = db.transaction(["noticias"], "readonly");
-      let objectStore = transacao.objectStore("noticias");
-      objectStore.getAll().onsuccess = function(consulta) {
-        resolve(consulta.target.result);
+      let request = window.indexedDB.open("noticias", 1);
+
+      request.onerror = function() {
+        console.log("Erro na abertura do banco de dados.");
+      };
+
+      request.onsuccess = function() {
+        console.log("Banco de dados aberto com sucesso.");
+        db = request.result;
+        let transacao = db.transaction(["noticias"], "readonly");
+        let objectStore = transacao.objectStore("noticias");
+        objectStore.getAll().onsuccess = function(consulta) {
+          resolve(consulta.target.result);
+        };
       };
     });
   }

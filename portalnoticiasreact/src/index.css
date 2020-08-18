@@ -8,7 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.form-inline{
+.form-inline {
   width: 100%;
 }
 
@@ -147,7 +147,7 @@ body {
 }
 
 #divBtNoticiasDestaques {
-  display: none;
+  display: block;
 }
 
 #divBtNoticiasSalvas {
