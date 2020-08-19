@@ -39,6 +39,11 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  componentDidMount() {
+    this.popularDropdownPaises();
+  }
+
   mostrarBtNoticiasSalvas() {
     document.getElementById("divBtNoticiasSalvas").style.display = "block";
     document.getElementById("divBtNoticiasDestaques").style.display = "none";
@@ -49,11 +54,96 @@ class Header extends React.Component {
     document.getElementById("divBtNoticiasDestaques").style.display = "block";
   }
 
+  popularDropdownPaises() {
+    let paises = {
+      br: "Brasil",
+      ae: "United Arab Emirates",
+      ar: "Argentina",
+      at: "Austria",
+      au: "Australia",
+      be: "Belgium",
+      bg: "Bulgaria",
+      ca: "Canada",
+      ch: "Switzerland",
+      cn: "China",
+      co: "Colombia",
+      cu: "Cuba",
+      cz: "Czechia",
+      de: "Germany",
+      eg: "Egype",
+      fr: "France",
+      gb: "United Kingdom",
+      gr: "Greee",
+      hk: "Hong Kong",
+      hu: "Hungary",
+      id: "Indonesia",
+      ie: "Ireland",
+      il: "Israel",
+      in: "India",
+      it: "Italy",
+      jp: "Japan",
+      kr: "Korea",
+      lt: "Lithuania",
+      lv: "Latvia",
+      ma: "Morocco",
+      mx: "Mexico",
+      my: "Malaysia",
+      ng: "Nigeria",
+      nl: "Netherlands",
+      no: "Norway",
+      nz: "New Zealand",
+      ph: "Philippines",
+      pl: "Poland",
+      pt: "Portugal",
+      ro: "Romania",
+      rs: "Serbia",
+      ru: "Russia",
+      sa: "Saudi Arabia",
+      se: "Sweden",
+      sg: "Singapore",
+      si: "Slovenia",
+      sk: "Slovakia",
+      th: "Thailand",
+      tr: "Turkey",
+      tw: "Taiwan",
+      ua: "Ukraine",
+      us: "United States of America",
+      ve: "Venezuela",
+      za: "South Africa"
+    };
+
+    let ddPais = document.getElementById("ddPais");
+    let countryKeys = Object.keys(paises);
+
+    for (let index = 0; index < countryKeys.length; index++) {
+      const sigla = countryKeys[index];
+      const pais = paises[sigla];
+      let option = document.createElement("option");
+      option.appendChild(document.createTextNode(pais));
+      option.value = sigla;
+      ddPais.appendChild(option);
+    }
+  }
+
   render() {
     return (
       <div>
         <nav className="navbar navbar-light bg-light">
           <form className="form-inline">
+            <select
+              id="ddPais"
+              className="form-control"
+              onChange={() => {
+                this.props.api
+                  .buscarNoticiasPais(document.getElementById("ddPais").value)
+                  .then(listaNoticias => {
+                    this.props.dispatch({
+                      type: "noticia/updateLista",
+                      lista: listaNoticias
+                    });
+                  });
+              }}
+            ></select>
             <button
               className="btn btn-outline-info btn-sm mr-sm-2"
               type="button"

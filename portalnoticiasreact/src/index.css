@@ -101,6 +101,11 @@ body {
   grid-area: manchete;
 }
 
+#ddPais {
+  margin: 8px;
+  height: 32px;
+}
+
 .cardManchete a {
   margin-bottom: 2px;
   font-weight: bold;

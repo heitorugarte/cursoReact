@@ -156,7 +156,11 @@ const Imagem = props => {
     <div className="cardImagem">
       <img
         id="imgComponent"
-        src={props.urlToImage}
+        src={
+          props.urlToImage
+            ? props.urlToImage
+            : "http://via.placeholder.com/400x170"
+        }
         alt="Erro ao carregar imagem"
       ></img>
     </div>
